@@ -1,17 +1,5 @@
 <template>
   <div class="home">
-    <b-button type="is-danger" @click="login()">Sign in with Goolge</b-button>
-    <b-button type="is-danger" @click="logOut()">Logout</b-button>
+    <h1>Home Page</h1>
   </div>
 </template>
-
-<script>
-import { mapActions } from 'vuex';
-
-export default {
-  name: 'Home',
-  methods: {
-    ...mapActions('auth', ['login', 'logOut']),
-  },
-};
-</script>
