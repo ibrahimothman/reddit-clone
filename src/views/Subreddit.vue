@@ -1,26 +1,39 @@
 <template>
   <section>
-    <h1>post</h1>
-    <create-post :onCreatePost="onCreatePost"></create-post>
-    <pre> {{ posts }} </pre>
+    <h1>{{ subreddit.name }}</h1>
+    <button
+      @click="showForm = !showForm"
+      class="button is-primary margin"
+      type="submit">Add Post</button>
+    <create-post v-if="showForm" :onCreatePost="onCreatePost"></create-post>
+    <single-post class="margin" v-for="post in posts"
+      :key="post.id"
+      :post="post"
+    >
+    </single-post>
   </section>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
 import CreatePost from '../components/CreatePost.vue';
+import SinglePost from '../components/SinglePost.vue';
 
 export default {
+  data: () => ({
+    showForm: false,
+  }),
   components: {
     CreatePost,
+    SinglePost,
   },
-  created() {
-    this.initSubreddit(this.$route.params.name);
+  async created() {
+    await this.initSubreddit(this.$route.params.name);
   },
   watch: {
-    subreddit() {
+    async subreddit() {
       if (this.subreddit.id) {
-        this.initPosts(this.subreddit.id);
+        await this.initPosts(this.subreddit.id);
       }
     },
   },
@@ -33,7 +46,14 @@ export default {
       ['initSubreddit', 'initPosts', 'createPost']),
     async onCreatePost(post) {
       await this.createPost(post);
+      this.showForm = false;
     },
   },
 };
 </script>
+
+<style scoped>
+  .margin {
+    margin-top: 2em;
+  }
+</style>

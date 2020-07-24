@@ -19,16 +19,16 @@ const getters = {
 
 const actions = {
   // get current subreddit
-  initSubreddit: firestoreAction(({ bindFirestoreRef }, name) => {
+  initSubreddit: firestoreAction(async ({ bindFirestoreRef }, name) => {
     // return the promise returned by `bindFirestoreRef`
-    return bindFirestoreRef('subreddits',
+    await bindFirestoreRef('subreddits',
       subreddits.where('name', '==', name));
   }),
 
   // get subreddit's posts
-  initPosts: firestoreAction(({ bindFirestoreRef }, subredditId) => {
+  initPosts: firestoreAction(async ({ bindFirestoreRef }, subredditId) => {
     // return the promise returned by `bindFirestoreRef`
-    return bindFirestoreRef('posts',
+    await bindFirestoreRef('posts',
       posts.where('subreddit_id', '==', subredditId)
         .orderBy('created_at', 'desc'));
   }),
