@@ -11,7 +11,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
       name: user.displayName,
       email: user.email,
       photoURL: user.photoURL,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      created_at: firebase.firestore.FieldValue.serverTimestamp(),
     };
     await db.collection('users').doc(data.id).set(data);
     store.commit('auth/setUser', data);
