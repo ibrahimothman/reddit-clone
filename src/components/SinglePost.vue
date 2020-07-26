@@ -12,7 +12,7 @@
       <div class="content">
         <p>
           <strong> {{ post.title }} </strong>
-          <small>@johnsmith</small>
+          <small>@<router-link to="#">{{ user.name }}</router-link></small>
           <small v-if="post.created_at"> {{ postTime }}</small>
           <br>
           {{ post.description }}
@@ -41,7 +41,7 @@
 import moment from 'moment';
 
 export default {
-  props: ['post'],
+  props: ['post', 'user'],
   computed: {
     postTime() {
       return moment(this.post.created_at.toDate())

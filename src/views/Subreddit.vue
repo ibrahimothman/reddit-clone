@@ -9,6 +9,7 @@
     <single-post class="margin" v-for="post in posts"
       :key="post.id"
       :post="post"
+      :user="usersById[post.user_id]"
     >
     </single-post>
   </section>
@@ -29,6 +30,7 @@ export default {
   },
   async created() {
     await this.initSubreddit(this.$route.params.name);
+    await this.initUsers();
   },
   watch: {
     async subreddit() {
@@ -38,12 +40,16 @@ export default {
     },
   },
   computed: {
-    ...mapGetters('subreddit', ['subreddit']),
+    ...mapGetters({
+      subreddit: 'subreddit/subreddit',
+      usersById: 'users/usersById',
+    }),
     ...mapState('subreddit', ['posts']),
   },
   methods: {
     ...mapActions('subreddit',
       ['initSubreddit', 'initPosts', 'createPost']),
+    ...mapActions('users', ['initUsers']),
     async onCreatePost(post) {
       await this.createPost(post);
       this.showForm = false;

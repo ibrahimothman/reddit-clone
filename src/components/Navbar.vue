@@ -13,7 +13,7 @@
               </figure>
 
               <div class="buttons">
-                <a v-if="isLoggedIn" class="button is-danger" @click="logOut()">
+                <a v-if="isLoggedIn" class="button is-danger" @click="onLogOut()">
                     Logout
                 </a>
                 <a v-if="!isLoggedIn" class="button is-danger" @click="login()">
@@ -36,6 +36,10 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['login', 'logOut']),
+    async onLogOut() {
+      await this.logOut();
+      this.$router.push('/');
+    },
   },
 };
 </script>
