@@ -5,7 +5,7 @@ import store from './store';
 firebase.auth().onAuthStateChanged(async (user) => {
   if (user) {
     // User is signed in.
-    console.log(user.displayName);
+    // console.log(user.displayName);
     const data = {
       id: user.uid,
       name: user.displayName,
@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
     store.commit('auth/setUser', data);
   } else {
     // No user is signed in.
-    console.log('no auth user');
+    // console.log('no auth user');
     store.commit('auth/setUser', null);
   }
 });

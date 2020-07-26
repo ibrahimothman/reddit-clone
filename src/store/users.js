@@ -23,7 +23,6 @@ const actions = {
     // return the promise returned by `bindFirestoreRef`
     await bindFirestoreRef('users', users);
   }),
-
 };
 
 export default {
