@@ -40,6 +40,7 @@ const actions = {
     post.created_at = firebase.firestore.FieldValue.serverTimestamp();
     post.subreddit_id = getters.subreddit.id;
     post.user_id = rootState.auth.user.id;
+    console.log(post);
     try {
       await posts.doc(post.id).set(post);
     } catch (err) {

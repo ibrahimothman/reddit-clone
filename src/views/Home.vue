@@ -1,5 +1,9 @@
 <template>
   <div class="home">
-    <h1>Home Page</h1>
+    <b-button tag="router-link"
+        to="/subreddits"
+        type="is-primary">
+        See Subreddits
+    </b-button>
   </div>
 </template>

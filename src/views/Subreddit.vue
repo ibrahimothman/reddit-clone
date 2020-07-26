@@ -7,7 +7,10 @@
       class="button is-primary margin"
       type="submit">Add Post</button>
     <create-post v-if="showForm" :onCreatePost="onCreatePost"></create-post>
-    <single-post class="margin" v-for="post in posts"
+    <filter-posts
+      :onSearchTermChanged="onSearchTermChanged"
+    ></filter-posts>
+    <single-post class="margin" v-for="post in filterPosts"
       :key="post.id"
       :post="post"
       :user="loadingUsers[post.user_id]"
@@ -21,14 +24,17 @@
 import { mapActions, mapGetters, mapState } from 'vuex';
 import CreatePost from '../components/CreatePost.vue';
 import SinglePost from '../components/SinglePost.vue';
+import FilterPosts from '../components/Filter.vue';
 
 export default {
   data: () => ({
     showForm: false,
+    searchTerm: '',
   }),
   components: {
     CreatePost,
     SinglePost,
+    FilterPosts,
   },
   async created() {
     await this.initSubreddit(this.$route.params.name);
@@ -56,6 +62,13 @@ export default {
         return byId;
       }, {});
     },
+    filterPosts() {
+      if (this.searchTerm) {
+        const regexp = new RegExp(this.searchTerm, 'i');
+        return this.posts.filter((post) => (post.title + post.description).match(regexp));
+      }
+      return this.posts;
+    },
   },
   methods: {
     ...mapActions('subreddit',
@@ -64,6 +77,9 @@ export default {
     async onCreatePost(post) {
       await this.createPost(post);
       this.showForm = false;
+    },
+    onSearchTermChanged(val) {
+      this.searchTerm = val;
     },
   },
 };
