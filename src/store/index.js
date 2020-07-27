@@ -5,6 +5,7 @@ import auth from './googleOAuth';
 import subreddits from './subreddits';
 import subreddit from './subreddit';
 import users from './users';
+import posts from './posts';
 
 Vue.use(Vuex);
 
@@ -15,5 +16,6 @@ export default new Vuex.Store({
     subreddits,
     subreddit,
     users,
+    posts,
   },
 });

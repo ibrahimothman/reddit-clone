@@ -14,6 +14,7 @@
       :key="post.id"
       :post="post"
       :user="loadingUsers[post.user_id]"
+      :deletePost="onDeletePost"
     >
     </single-post>
   </section>
@@ -73,13 +74,19 @@ export default {
   methods: {
     ...mapActions('subreddit',
       ['initSubreddit', 'initPosts', 'createPost']),
-    ...mapActions('users', ['initUsers']),
+    ...mapActions({
+      initUsers: 'users/initUsers',
+      deletePost: 'posts/deletePost',
+    }),
     async onCreatePost(post) {
       await this.createPost(post);
       this.showForm = false;
     },
     onSearchTermChanged(val) {
       this.searchTerm = val;
+    },
+    async onDeletePost(postId) {
+      await this.deletePost(postId);
     },
   },
 };
